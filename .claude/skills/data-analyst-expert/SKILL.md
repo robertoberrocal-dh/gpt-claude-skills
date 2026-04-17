@@ -40,6 +40,10 @@ Before querying, consult:
 - `references/sql_patterns.md`
 - `references/schema_reference.md`
 
+For questions about experiment methodology, action standards, or pricing strategy, also consult:
+- `references/knowledge/pricing_experiment_knowledge_hub.md` — methodology for measuring pricing performance, AB test analysis, extrapolation, and top experiments
+- `references/knowledge/pricing_action_standards_process.md` — how pricing experiments are evaluated, decision criteria, and the action standards process
+
 Stay within documented scope unless the user explicitly asks to explore a new table.
 
 ## Core Principles
@@ -92,6 +96,35 @@ Prefer this source when the user explicitly needs:
 - stricter profitability views
 - marketing and finance-oriented P&L logic
 - funding source or subsidy breakdowns
+
+### D. Pricing experiment readout and action decisions
+Prefer:
+- `dh-imd.growth_pricing.pricing_action_standards` (primary — enriched stats + metadata)
+- `dh-imd.growth_pricing.test_pnl` (P&L breakdown by variant)
+- `dh-imd.growth_pricing.test_confidence` (raw stats without metadata)
+- `dh-imd.growth_pricing.daily_order_profitability` (daily metric trends within a test)
+- `dh-imd.growth_pricing.test_user_assignment` (user-to-variant assignment lookup)
+
+Use this family for:
+- experiment statistical readouts (p-values, confidence intervals, means per variant)
+- ranking experiments by profit or volume impact across entities
+- P&L waterfall breakdown by experiment variant and vertical
+- tracking experiment metrics day-by-day during a test
+- user-to-variant assignment lookups and randomization validation
+- comparing DPS-Central vs BIMA-Regional profit signals for the same experiment
+
+Table selection within this family:
+- default to `pricing_action_standards` for any experiment readout question
+- use `test_pnl` when the question requires a detailed revenue or cost breakdown per variant
+- use `test_confidence` when only raw statistical results are needed and metadata is irrelevant
+- use `daily_order_profitability` when the question is about how a metric evolved day-by-day within a test
+- use `test_user_assignment` only when you need to attribute individual users or orders to a variant
+
+Key caveats for this family:
+- `pricing_action_standards` has multiple rows per test per snapshot — always filter to latest `updated_date` and one `data_source`
+- `test_user_assignment` is ~2.4B rows — always filter by `entity_id` and `test_id`
+- `flgpo_local` fields are in local currency — do not compare across entities
+- BM_KR profit values are in KRW, not EUR — flag and exclude from cross-entity profit rankings
 
 ## Required Workflow
 
