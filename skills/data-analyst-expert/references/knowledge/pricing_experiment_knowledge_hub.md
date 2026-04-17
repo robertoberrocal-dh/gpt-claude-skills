@@ -459,7 +459,7 @@ Knowledge Hub
 
 
 This Document is Maintained by the Central Growth Pricing Team
-Reach out to laurent.broering@deliveryhero.com for questions and feedbacks
+Kindly reach them out for questions and feedbacks
 
 [TBC]
 About the Strategy

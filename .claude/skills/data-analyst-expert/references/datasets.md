@@ -90,7 +90,7 @@ Notes:
 ## Dataset Family D: Pricing Experiment Pipeline (Action Standards)
 
 This family covers the pipeline created and maintained by the Global Pricing Team
-(`pricing_action_standards` scheduled query, owner: laurent.broering@deliveryhero.com).
+`pricing_action_standards` scheduled query
 It produces daily statistical readouts for all active pricing experiments.
 
 Pipeline flow:
